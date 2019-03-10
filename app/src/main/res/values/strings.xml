@@ -1,4 +1,7 @@
 <resources>
-    <string name ="app_name">RLapp</string>
-    <string name ="app_profile">Profile</string>
+    <string name="app_name">RLapp</string>
+    <string name="app_profile">Profile</string>
+
+    //Header Layout
+    <string name="header_Layout">User Name</string>
 </resources>

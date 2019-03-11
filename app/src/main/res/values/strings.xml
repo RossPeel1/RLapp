@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">RLapp</string>
     <string name="app_profile">Profile</string>
+    <string name="drawer_Open">Drawer Open</string>
+    <string name="drawer_Close">Drawer Close</string>
 
     //Header Layout
     <string name="header_Layout">User Name</string>

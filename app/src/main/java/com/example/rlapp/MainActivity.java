@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Toolbar mainToolbar;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

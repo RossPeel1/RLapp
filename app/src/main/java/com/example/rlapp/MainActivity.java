@@ -13,6 +13,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
 
     private NavigationView navigationView;
@@ -20,11 +24,13 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Toolbar mainToolbar;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mAuth = FirebaseAuth.getInstance();                                                         // initialise authentication for freebase
 
         mainToolbar = (Toolbar) findViewById(R.id.main_page_Toolbar);                               // setup menu bar layout
         setSupportActionBar(mainToolbar);
@@ -46,6 +52,24 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser == null)
+        {
+            SendUserToLoginActivity();
+        }
+    }
+
+    private void SendUserToLoginActivity() {
+        Intent loginIntent = new Intent(MainActivity.this, Login.class);
+        loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);      // validation
+        startActivity(loginIntent);
+        finish();
     }
 
     @Override

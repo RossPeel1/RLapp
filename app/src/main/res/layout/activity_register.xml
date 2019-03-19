@@ -8,15 +8,18 @@
     android:background="@color/colorPrimary"
     tools:context=".Register">
 
-    <ImageView
+
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/register_img"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="54dp"
-        app:srcCompat="@drawable/profile" />
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="26dp"
+        android:src="@drawable/profile"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp" />
 
     <EditText
         android:id="@+id/e-mail_input_txt"

@@ -68,7 +68,7 @@ public class Register extends AppCompatActivity {
 
 
     private void CreateNewAccount() {
-        String email = userEmail.getText().toString();                               // get user inputs from register text boxes [
+        String email = userEmail.getText().toString();                                              // get user inputs from register text boxes
         String password = userPassword.getText().toString();
         String confirm = userConfirmPass.getText().toString();
 

@@ -70,11 +70,22 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists())
                 {
-                String fullname = dataSnapshot.child("Full Name").getValue().toString();
-                String image = dataSnapshot.child("profile Images").getValue().toString();
+                    if(dataSnapshot.hasChild("Full Name")) // does the user name exists in fire base for the current user
+                    {
+                        String fullname = dataSnapshot.child("Full Name").getValue().toString();
+                        NavProfileName.setText(fullname);
+                    }
+                    if (dataSnapshot.hasChild("profile Images"))
+                    {
+                        String image = dataSnapshot.child("profile Images").getValue().toString();
+                        Picasso.get().load(image).placeholder(R.drawable.profile).into(NavProfileImage);
+                    }
+                    else
+                        {
+                            Toast.makeText(MainActivity.this, "Profile does not exist", Toast.LENGTH_SHORT).show();
+                        }
 
-                NavProfileName.setText(fullname);
-                    Picasso.get().load(image).placeholder(R.drawable.profile).into(NavProfileImage);
+
                 }
             }
 

@@ -90,8 +90,15 @@ final static int gallerypic = 1;
             {
                 if(dataSnapshot.exists())
                 {
-                    String image = dataSnapshot.child("profile Images").getValue().toString();
-                    Picasso.get().load(image).placeholder(R.drawable.profile).into(userProfleImage); // get the profile image form fire base and display it in the circle view
+                    if (dataSnapshot.hasChild("profile Images"))
+                    {
+                        String image = dataSnapshot.child("profile Images").getValue().toString();
+                        Picasso.get().load(image).placeholder(R.drawable.profile).into(userProfleImage); // get the profile image form fire base and display it in the circle view
+                    }
+                    else
+                        {
+                        Toast.makeText(Setup_Activity.this, "please selectet profile image",Toast.LENGTH_SHORT).show();
+                        }
                 }
             }
 

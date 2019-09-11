@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +21,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,8 +33,12 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar mainToolbar;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
+    private CircleImageView NavProfileImage;
+    private TextView NavProfileName;
+
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef;
+    String currentUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();                                                         // initialise authentication for freebase
+        currentUserID = mAuth.getCurrentUser().getUid();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");                    // Get the user reference number form fire base and store under users
 
         mainToolbar = (Toolbar) findViewById(R.id.main_page_Toolbar);                               // setup menu bar layout
@@ -51,7 +60,30 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         navigationView = (NavigationView) findViewById(R.id.navigation_View);
-        View navView = navigationView.inflateHeaderView(R.layout.header);
+
+        View navView = navigationView.inflateHeaderView(R.layout.header);                           // allow access to naview
+        NavProfileImage = (CircleImageView) navView.findViewById(R.id.navProfileImage);             //cast nav profile image and name note Cast "NavView" to access crashes without.
+        NavProfileName = (TextView) navView.findViewById(R.id.navProfileName);
+
+        UsersRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
+                {
+                String fullname = dataSnapshot.child("Full Name").getValue().toString();
+                String image = dataSnapshot.child("profile Images").getValue().toString();
+
+                NavProfileName.setText(fullname);
+                    Picasso.get().load(image).placeholder(R.drawable.profile).into(NavProfileImage);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

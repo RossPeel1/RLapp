@@ -14,6 +14,18 @@
         <include
             android:id="@+id/main_page_Toolbar"
             layout="@layout/app_bar_layout" />
+
+        <ImageButton
+            android:id="@+id/add_new_post_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignBottom="@+id/main_page_Toolbar"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/button" />
+        
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView

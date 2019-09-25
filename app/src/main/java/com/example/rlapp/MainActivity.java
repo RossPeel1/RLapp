@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     private CircleImageView NavProfileImage;
     private TextView NavProfileName;
+    private ImageButton AddNewPostButton;
 
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef;
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         mainToolbar = (Toolbar) findViewById(R.id.main_page_Toolbar);                               // setup menu bar layout
         setSupportActionBar(mainToolbar);
         getSupportActionBar().setTitle("Home");
+
+        AddNewPostButton = (ImageButton) findViewById(R.id.add_new_post_button);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawable_Layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout, R.string.drawer_Open, R.string.drawer_Close);
@@ -103,7 +107,21 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+        AddNewPostButton.setOnClickListener(new View.OnClickListener() {                            // if user selects new post button/ image send them to post activity
+            @Override
+            public void onClick(View v) {
+                SendUserToPostActivity();
+           }
+        });
     }
+
+    private void SendUserToPostActivity() {
+
+        Intent AddNewPostIntent = new Intent(MainActivity.this, Post.class);
+        startActivity(AddNewPostIntent);
+
+    }
+
 
     @Override
     protected void onStart() {
@@ -175,8 +193,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.nav_Post:
                 Toast.makeText(getApplicationContext(),"Post", Toast.LENGTH_SHORT).show();
-                Intent postIntent = new Intent(this, Post.class);
-                startActivity(postIntent);
+                SendUserToPostActivity();
                 break;
             case R.id.nav_friends:
                 Toast.makeText(getApplicationContext(),"Friends", Toast.LENGTH_SHORT).show();
